@@ -16,9 +16,11 @@ class IOData():
     def load(self, folder, file, extension):
         Import = open(folder+file+extension, 'r')
         if Import.readline(0) == 'PLAYER':
-            player = Player(Import.readline(1), int(Import.readline(2)), int(Import.readline(3)), int(Import.readline(4)))
+            ret = Player(Import.readline(1), int(Import.readline(2)), int(Import.readline(3)), int(Import.readline(4)))
+        if Import.readline(0) == 'MAGIC':
+            ret = Magic(Import.readline(1), Import.readline(2), Import.readline(3), Import.readline(4))
         Import.close()
-        return player
+        return ret
 
 
 class Player():
