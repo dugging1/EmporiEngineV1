@@ -1,4 +1,5 @@
 __author__ = 'dugging'
+import math
 
 
 class IOData():
@@ -15,6 +16,16 @@ class IOData():
             export.write(str(data.Int))
             export.write('\n')
             export.write(str(data.Str))
+            export.write('\n')
+            export.write(data.clas)
+            export.write('\n')
+            export.write(str(data.Exp))
+            export.write('\n')
+            export.write(str(data.Lvl))
+            export.write('\n')
+            export.write(str(data.exponent))
+            export.write('\n')
+            export.write(str(data.coefficient))
         if data.TYPE == 'MAGIC':
             export.write(data.TYPE)
             export.write('\n')
@@ -32,7 +43,11 @@ class IOData():
         importing = open(folder+file+extension, 'r')
         check = importing.readlines(0)
         if check[0].strip('\n') == 'PLAYER':
-            ret = Player(check[1].strip('\n'), int(check[2].strip('\n')), int(check[3].strip('\n')), int(check[4]))
+            ret = Player(check[1].strip('\n'), int(check[2].strip('\n')), int(check[3].strip('\n')), int(check[4].strip('\n')), check[5].strip('\n'))
+            ret.Lvl = int(check[7])
+            ret.Exp = int(check[6])
+            ret.coefficient = int(check[9])
+            ret.exponent = int(check[8])
         elif check[0].strip('\n') == 'MAGIC':
             ret = Magic(check[1].strip('\n'), int(check[2].strip('\n')), int(check[3].strip('\n')))
 
@@ -44,8 +59,11 @@ class IOData():
 
 class Player():
     TYPE = 'PLAYER'
+    Lvl = 0
+    Exp = 0
 
-    def __init__(self, name, dex, stre, inte):
+    def __init__(self, name, dex, stre, inte, clas):
+        self.clas = clas
         self.Name = name
         self.Dex = dex
         self.Str = stre
@@ -56,6 +74,13 @@ class Player():
         self.Hp = int(self.Str/4)+stre
         self.Mp = int(self.Int/8)+inte
         self.Inv = []
+
+    def createexpcurve(self, coefficient, exponent):
+        self.coefficient = coefficient
+        self.exponent = exponent
+
+    def checklvl(self):
+        self.Lvl = math.floor(self.Exp**(1/self.exponent)/self.coefficient)
 
 
 class Magic():
