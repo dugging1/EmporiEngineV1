@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../EmporiEditorV1/.idea/EmporiEditorV1.iml" filepath="$PROJECT_DIR$/../EmporiEditorV1/.idea/EmporiEditorV1.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/EmporiEngineV1.iml" filepath="$PROJECT_DIR$/.idea/EmporiEngineV1.iml" />
     </modules>
   </component>
 </project>
-
