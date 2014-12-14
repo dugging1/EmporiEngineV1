@@ -1,5 +1,6 @@
 __author__ = 'dugging'
 import math
+import random
 
 
 class IOData():
@@ -122,6 +123,9 @@ class Mob():
 
 
 class Battle():
+    Victory = False
+    Loss = False
+
     def __init__(self, player, monster):
         self.Player = player
         self.Monster = monster
@@ -137,3 +141,10 @@ class Battle():
 
     def monstermatk(self, magic):
         self.Player.Hp -= (magic.Dam - int(self.Player.MDef))
+
+    def checkstate(self):
+        if self.Player.Hp == 0:
+            self.Loss = True
+        elif self.Monster.Hp == 0:
+            self.Player.Inv.append(random.choice(self.Monster.Loot))
+            self.Victory = True
