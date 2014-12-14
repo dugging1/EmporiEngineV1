@@ -72,9 +72,10 @@ class Magic():
 class Item():
     TYPE = 'ITEM'
 
-    def __init__(self, name, stat, amount, cost, pic=None):
+    def __init__(self, name, stat, slot, amount, cost, pic=None):
         self.Name = name
         self.Stat = stat
+        self.Slot = slot
         self.Amount = amount
         self.Cost = cost
         self.pic = pic
