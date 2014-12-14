@@ -2,7 +2,8 @@ __author__ = 'dugging'
 
 
 class IOData():
-    def save(self, folder, file, extension, Data):
+    @staticmethod
+    def save(folder, file, extension, Data):
         Export = open(folder+file+extension, 'w')
         if Data.TYPE == 'PLAYER':
             Export.write(Data.TYPE)
