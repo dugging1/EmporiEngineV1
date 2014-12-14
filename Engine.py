@@ -3,26 +3,42 @@ __author__ = 'dugging'
 
 class IOData():
     @staticmethod
-    def save(folder, file, extension, Data):
-        Export = open(folder+file+extension, 'w')
-        if Data.TYPE == 'PLAYER':
-            Export.write(Data.TYPE)
-            Export.write('\n')
-            Export.write(Data.Name)
-            Export.write('\n')
-            Export.write(str(Data.Dex))
-            Export.write('\n')
-            Export.write(str(Data.Int))
-            Export.write('\n')
-            Export.write(str(Data.Str))
-        Export.close()
+    def save(folder, file, extension, data):
+        export = open(folder+file+extension, 'w')
+        if data.TYPE == 'PLAYER':
+            export.write(data.TYPE)
+            export.write('\n')
+            export.write(data.Name)
+            export.write('\n')
+            export.write(str(data.Dex))
+            export.write('\n')
+            export.write(str(data.Int))
+            export.write('\n')
+            export.write(str(data.Str))
+        if data.TYPE == 'MAGIC':
+            export.write(data.TYPE)
+            export.write('\n')
+            export.write(data.Name)
+            export.write('\n')
+            export.write(data.Dam)
+            export.write('\n')
+            export.write(data.Lvl)
+            export.write('\n')
+            export.write(data.picPath)
+        export.close()
 
-    def load(self, folder, file, extension):
-        Import = open(folder+file+extension, 'r')
-        Check = Import.readlines(0)
-        if Check[0].strip('\n') == 'PLAYER':
-            ret = Player(Check[1].strip('\n'), int(Check[2].strip('\n')), int(Check[3].strip('\n')), int(Check[4]))
-        Import.close()
+    @staticmethod
+    def load(folder, file, extension):
+        importing = open(folder+file+extension, 'r')
+        check = importing.readlines(0)
+        if check[0].strip('\n') == 'PLAYER':
+            ret = Player(check[1].strip('\n'), int(check[2].strip('\n')), int(check[3].strip('\n')), int(check[4]))
+        elif check[0].strip('\n') == 'MAGIC':
+            ret = Magic(check[1].strip('\n'), int(check[2].strip('\n')), int(check[3].strip('\n')))
+
+        else:
+            ret = None
+        importing.close()
         return ret
 
 
@@ -45,11 +61,12 @@ class Player():
 class Magic():
     TYPE = 'MAGIC'
 
-    def __init__(self, name, dam, lvl, pic=None):
+    def __init__(self, name, dam, lvl, pic=None, picpath=None):
         self.Name = name
         self.Dam = dam
         self.Lvl = lvl
-        self.pic = pic
+        self.Pic = pic
+        self.picPath = picpath
 
 
 class Item():
