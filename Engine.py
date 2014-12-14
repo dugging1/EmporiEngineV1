@@ -9,17 +9,19 @@ class IOData():
             Export.write(Data.TYPE)
             Export.write('\n')
             Export.write(Data.Name)
+            Export.write('\n')
             Export.write(str(Data.Dex))
+            Export.write('\n')
             Export.write(str(Data.Int))
+            Export.write('\n')
             Export.write(str(Data.Str))
         Export.close()
 
     def load(self, folder, file, extension):
         Import = open(folder+file+extension, 'r')
-        if Import.readline(0) == 'PLAYER':
-            ret = Player(Import.readline(1), int(Import.readline(2)), int(Import.readline(3)), int(Import.readline(4)))
-        if Import.readline(0) == 'MAGIC':
-            ret = Magic(Import.readline(1), Import.readline(2), Import.readline(3), Import.readline(4))
+        Check = Import.readlines(0)
+        if Check[0].strip('\n') == 'PLAYER':
+            ret = Player(Check[1].strip('\n'), int(Check[2].strip('\n')), int(Check[3].strip('\n')), int(Check[4]))
         Import.close()
         return ret
 
