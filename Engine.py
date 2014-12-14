@@ -71,6 +71,7 @@ class Magic():
 
 class Item():
     TYPE = 'ITEM'
+
     def __init__(self, name, stat, amount, cost, pic=None):
         self.Name = name
         self.Stat = stat
@@ -81,6 +82,7 @@ class Item():
 
 class Mob():
     TYPE = 'MOB'
+
     def __init__(self, name, hp, mp, dam, defe, exp, loot, magic, pic=None):
         self.Name = name
         self.Hp = hp
@@ -94,18 +96,18 @@ class Mob():
 
 
 class Battle():
-    def __init__(self, Player, Monster):
-        self.Player = Player
-        self.Monster = Monster
+    def __init__(self, player, monster):
+        self.Player = player
+        self.Monster = monster
 
-    def PlayerPysAtk(self):
+    def playerpysatk(self):
         self.Monster.Hp -= (self.Player.Dam - self.Monster.Def)
 
-    def MonsterPysAtk(self):
+    def monsterpysatk(self):
         self.Player.Hp -= (self.Monster.Dam - self.Player.Def)
 
-    def PlayerMAtk(self, Magic):
-        self.Monster.Hp -= (Magic.Dam - int(self.Monster.Def/2))
+    def playermatk(self, magic):
+        self.Monster.Hp -= (magic.Dam - int(self.Monster.Def/2))
 
-    def MonsterMAtk(self, Magic):
-        self.Player.Hp -= (Magic.Dam - int(self.Player.MDef))
+    def monstermatk(self, magic):
+        self.Player.Hp -= (magic.Dam - int(self.Player.MDef))
