@@ -17,10 +17,8 @@ class IOData():
         check = importing.readlines(0)
         importing.close()
         for x in check:
-            print('hi1')
             if x[:3] == 'typ':
                 if x[4:].strip('\n') == 'PLAYER':
-                    print('hi3')
                     for i in check:
                         if i[:3] == 'cla':
                             clas = i.strip('\n')[4:]
