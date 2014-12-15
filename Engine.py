@@ -8,53 +8,37 @@ class IOData():
     def save(folder, file, extension, data):
         export = open(folder+file+extension, 'w')
         if data.TYPE == 'PLAYER':
-            export.write(data.TYPE)
-            export.write('\n')
-            export.write(data.Name)
-            export.write('\n')
-            export.write(str(data.Dex))
-            export.write('\n')
-            export.write(str(data.Int))
-            export.write('\n')
-            export.write(str(data.Str))
-            export.write('\n')
-            export.write(data.clas)
-            export.write('\n')
-            export.write(str(data.Exp))
-            export.write('\n')
-            export.write(str(data.Lvl))
-            export.write('\n')
-            export.write(str(data.exponent))
-            export.write('\n')
-            export.write(str(data.coefficient))
-        if data.TYPE == 'MAGIC':
-            export.write(data.TYPE)
-            export.write('\n')
-            export.write(data.Name)
-            export.write('\n')
-            export.write(data.Dam)
-            export.write('\n')
-            export.write(data.Lvl)
-            export.write('\n')
-            export.write(data.picPath)
+            for i in data.__dict__:
+                export.write(str(i) + ':' + str(data.__dict__[i]) + '\n')
         export.close()
 
     @staticmethod
     def load(folder, file, extension):
         importing = open(folder+file+extension, 'r')
         check = importing.readlines(0)
-        if check[0].strip('\n') == 'PLAYER':
-            ret = Player(check[1].strip('\n'), int(check[2].strip('\n')), int(check[3].strip('\n')), int(check[4].strip('\n')), check[5].strip('\n'))
-            ret.Lvl = int(check[7])
-            ret.Exp = int(check[6])
-            ret.coefficient = int(check[9])
-            ret.exponent = int(check[8])
-        elif check[0].strip('\n') == 'MAGIC':
-            ret = Magic(check[1].strip('\n'), int(check[2].strip('\n')), int(check[3].strip('\n')))
-
-        else:
-            ret = None
         importing.close()
+        for i in check:
+            print(i[:3])
+            if i[:3] == 'cla':
+                clas = int(i.strip('\n')[4:])
+            elif i[:3] == 'Nam':
+                name = i.strip('\n')[4:]
+            elif i[:3] == 'coe':
+                coefficient = int(i.strip('\n')[4:])
+            elif i[:3] == 'exp':
+                exponent = int(i.strip('\n')[4:])
+            elif i[:3] == 'Exp':
+                experience = int(i.strip('\n')[4:])
+            elif i[:3] == 'Str':
+                strength = int(i.strip('\n')[4:])
+            elif i[:3] == 'Int':
+                inelegance = int(i.strip('\n')[4:])
+            elif i[:3] == 'Dex':
+                dexterity = int(i.strip('\n')[4:])
+        ret = Player(name, dexterity, strength, inelegance, clas)
+        ret.createexpcurve(coefficient, exponent)
+        ret.Exp = experience
+        ret.checklvl()
         return ret
 
 
@@ -62,8 +46,10 @@ class Player():
     TYPE = 'PLAYER'
     Lvl = 0
     Exp = 0
+    coefficient = 0
+    exponent = 0
 
-    def __init__(self, name, dex, stre, inte, clas):
+    def __init__(self, name='John', dex=0, stre=0, inte=0, clas='Unknown'):
         self.clas = clas
         self.Name = name
         self.Dex = dex
