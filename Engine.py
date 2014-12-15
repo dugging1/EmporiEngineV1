@@ -7,9 +7,8 @@ class IOData():
     @staticmethod
     def save(folder, file, extension, data):
         export = open(folder+file+extension, 'w')
-        if data.TYPE == 'PLAYER':
-            for i in data.__dict__:
-                export.write(str(i) + ':' + str(data.__dict__[i]) + '\n')
+        for i in data.__dict__:
+            export.write(str(i) + ':' + str(data.__dict__[i]) + '\n')
         export.close()
 
     @staticmethod
@@ -17,63 +16,67 @@ class IOData():
         importing = open(folder+file+extension, 'r')
         check = importing.readlines(0)
         importing.close()
-        for i in check:
-            print(i[:3])
-            if i[:3] == 'cla':
-                clas = int(i.strip('\n')[4:])
-            elif i[:3] == 'Nam':
-                name = i.strip('\n')[4:]
-            elif i[:3] == 'coe':
-                coefficient = int(i.strip('\n')[4:])
-            elif i[:3] == 'exp':
-                exponent = int(i.strip('\n')[4:])
-            elif i[:3] == 'Exp':
-                experience = int(i.strip('\n')[4:])
-            elif i[:3] == 'Str':
-                strength = int(i.strip('\n')[4:])
-            elif i[:3] == 'Int':
-                inelegance = int(i.strip('\n')[4:])
-            elif i[:3] == 'Dex':
-                dexterity = int(i.strip('\n')[4:])
-        ret = Player(name, dexterity, strength, inelegance, clas)
-        ret.createexpcurve(coefficient, exponent)
-        ret.Exp = experience
-        ret.checklvl()
-        return ret
+        for x in check:
+            print('hi1')
+            if x[:3] == 'typ':
+                if x[4:].strip('\n') == 'PLAYER':
+                    print('hi3')
+                    for i in check:
+                        if i[:3] == 'cla':
+                            clas = i.strip('\n')[4:]
+                        elif i[:3] == 'Nam':
+                            name = i.strip('\n')[4:]
+                        elif i[:3] == 'coe':
+                            coefficient = int(i.strip('\n')[4:])
+                        elif i[:3] == 'exp':
+                            exponent = int(i.strip('\n')[4:])
+                        elif i[:3] == 'Exp':
+                            experience = int(i.strip('\n')[4:])
+                        elif i[:3] == 'Str':
+                            strength = int(i.strip('\n')[4:])
+                        elif i[:3] == 'Int':
+                            inelegance = int(i.strip('\n')[4:])
+                        elif i[:3] == 'Dex':
+                            dexterity = int(i.strip('\n')[4:])
+                    ret = Player(name, dexterity, strength, inelegance, clas)
+                    ret.createexpcurve(coefficient, exponent)
+                    ret.Exp = experience
+                    ret.checklvl()
+        #return ret
 
 
 class Player():
-    TYPE = 'PLAYER'
     Lvl = 0
     Exp = 0
-    coefficient = 0
-    exponent = 0
+    coe = 0
+    exp = 0
 
     def __init__(self, name='John', dex=0, stre=0, inte=0, clas='Unknown'):
-        self.clas = clas
-        self.Name = name
+        self.typ = 'PLAYER'
+        self.cla = clas
+        self.Nam = name
         self.Dex = dex
         self.Str = stre
         self.Int = inte
         self.Dam = int(self.Dex/2)+dex
         self.Def = int(self.Str/8)+int(self.Dex/4)
-        self.MDef = int(self.Str/16)+int(self.Int/4)
-        self.Hp = int(self.Str/4)+stre
-        self.Mp = int(self.Int/8)+inte
+        self.MDe = int(self.Str/16)+int(self.Int/4)
+        self.Hea = int(self.Str/4)+stre
+        self.Man = int(self.Int/8)+inte
         self.Inv = []
 
     def createexpcurve(self, coefficient, exponent):
-        self.coefficient = coefficient
-        self.exponent = exponent
+        self.coe = coefficient
+        self.exp = exponent
 
     def checklvl(self):
-        self.Lvl = math.floor(self.Exp**(1/self.exponent)/self.coefficient)
+        self.Lvl = math.floor(self.Exp**(1/self.exp)/self.coe)
 
 
 class Magic():
-    TYPE = 'MAGIC'
 
     def __init__(self, name, dam, lvl, pic=None, picpath=None):
+        self.typ = 'MAGIC'
         self.Name = name
         self.Dam = dam
         self.Lvl = lvl
@@ -82,9 +85,9 @@ class Magic():
 
 
 class Item():
-    TYPE = 'ITEM'
 
     def __init__(self, name, stat, slot, amount, cost, pic=None):
+        self.typ = 'ITEM'
         self.Name = name
         self.Stat = stat
         self.Slot = slot
@@ -94,9 +97,9 @@ class Item():
 
 
 class Mob():
-    TYPE = 'MOB'
 
     def __init__(self, name, hp, mp, dam, defe, exp, loot, magic, pic=None):
+        self.typ = 'MOB'
         self.Name = name
         self.Hp = hp
         self.Mp = mp
