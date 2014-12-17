@@ -40,7 +40,48 @@ class IOData():
                     ret.createexpcurve(coefficient, exponent)
                     ret.Exp = experience
                     ret.checklvl()
-        #return ret
+                elif x[4:] == 'MAGIC':
+                    for i in check:
+                        if i[:3] == 'Dam':
+                            damage = int(i[4:].strip('\n'))
+                        elif i[:3] == 'Nam':
+                            name = i[4:].strip('\n')
+                        elif i[:3] == 'Lvl':
+                            level = int(i[4:].strip('\n'))
+                    ret = Magic(name, damage, level)
+                elif x[4:] == 'ITEM':
+                    for i in check:
+                        if i[:3] == 'Nam':
+                            name = i[4:].strip('\n')
+                        elif i[:3] == 'Sta':
+                            stat = i[4:].strip('\n')
+                        elif i[:3] == 'Slo':
+                            slot = i[4:].strip('\n')
+                        elif i[:3] == 'Amo':
+                            amount = int(i[4:].strip('\n'))
+                        elif i[:3] == 'Cos':
+                            cost = int(i[4:].strip('\n'))
+                    ret = Item(name, stat, slot, amount, cost)
+                elif x[4:] == 'MOB':
+                    for i in check:
+                        if i[:3] == 'Nam':
+                            name = i[4:].strip('\n')
+                        elif i[:3] == 'Hea':
+                            health = int(i[4:].strip('\n'))
+                        elif i[:3] == 'Man':
+                            mana = int(i[4:].strip('\n'))
+                        elif i[:3] == 'Dam':
+                            damage = int(i[4:].strip('\n'))
+                        elif i[:3] == 'Def':
+                            defence = int(i[4:].strip('\n'))
+                        elif i[:3] == 'Exp':
+                            experience = int(i[4:].strip('\n'))
+                        elif i[:3] == 'Lot':
+                            loot = i[4:].strip('\n')
+                        elif i[:3] == 'Mag':
+                            magic = i[4:].strip('\n')
+                    ret = Mob(name, health, mana, damage, defence, experience, loot, magic)
+        return ret
 
 
 class Player():
@@ -75,22 +116,22 @@ class Magic():
 
     def __init__(self, name, dam, lvl, pic=None, picpath=None):
         self.typ = 'MAGIC'
-        self.Name = name
+        self.Nam = name
         self.Dam = dam
         self.Lvl = lvl
         self.Pic = pic
-        self.picPath = picpath
+        self.picpath = picpath
 
 
 class Item():
 
     def __init__(self, name, stat, slot, amount, cost, pic=None):
         self.typ = 'ITEM'
-        self.Name = name
-        self.Stat = stat
-        self.Slot = slot
-        self.Amount = amount
-        self.Cost = cost
+        self.Nam = name
+        self.Sta = stat
+        self.Slo = slot
+        self.Amo = amount
+        self.Cos = cost
         self.pic = pic
 
 
@@ -98,14 +139,14 @@ class Mob():
 
     def __init__(self, name, hp, mp, dam, defe, exp, loot, magic, pic=None):
         self.typ = 'MOB'
-        self.Name = name
-        self.Hp = hp
-        self.Mp = mp
+        self.Nam = name
+        self.Hea = hp
+        self.Man = mp
         self.Dam = dam
         self.Def = defe
         self.Exp = exp
-        self.Loot = loot
-        self.Magic = magic
+        self.Lot = loot
+        self.Mag = magic
         self.pic = pic
 
 
