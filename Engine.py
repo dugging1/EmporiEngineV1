@@ -13,74 +13,52 @@ class IOData():
 
     @staticmethod
     def load(folder, file, extension):
+        #type, name, class, dex, str, int, Lvl, Expei, coe, exp,Dam(10), stat, slot, amount, cost, hp, mp, def
+        info = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         importing = open(folder+file+extension, 'r')
         check = importing.readlines(0)
         importing.close()
         for x in check:
             if x[:3] == 'typ':
-                if x[4:].strip('\n') == 'PLAYER':
-                    for i in check:
-                        if i[:3] == 'cla':
-                            clas = i.strip('\n')[4:]
-                        elif i[:3] == 'Nam':
-                            name = i.strip('\n')[4:]
-                        elif i[:3] == 'coe':
-                            coefficient = int(i.strip('\n')[4:])
-                        elif i[:3] == 'exp':
-                            exponent = int(i.strip('\n')[4:])
-                        elif i[:3] == 'Exp':
-                            experience = int(i.strip('\n')[4:])
-                        elif i[:3] == 'Str':
-                            strength = int(i.strip('\n')[4:])
-                        elif i[:3] == 'Int':
-                            inelegance = int(i.strip('\n')[4:])
-                        elif i[:3] == 'Dex':
-                            dexterity = int(i.strip('\n')[4:])
-                    ret = Player(name, dexterity, strength, inelegance, clas)
-                    ret.createexpcurve(coefficient, exponent)
-                    ret.Exp = experience
-                    ret.checklvl()
-                elif x[4:] == 'MAGIC':
-                    for i in check:
-                        if i[:3] == 'Dam':
-                            damage = int(i[4:].strip('\n'))
-                        elif i[:3] == 'Nam':
-                            name = i[4:].strip('\n')
-                        elif i[:3] == 'Lvl':
-                            level = int(i[4:].strip('\n'))
-                    ret = Magic(name, damage, level)
-                elif x[4:] == 'ITEM':
-                    for i in check:
-                        if i[:3] == 'Nam':
-                            name = i[4:].strip('\n')
-                        elif i[:3] == 'Sta':
-                            stat = i[4:].strip('\n')
-                        elif i[:3] == 'Slo':
-                            slot = i[4:].strip('\n')
-                        elif i[:3] == 'Amo':
-                            amount = int(i[4:].strip('\n'))
-                        elif i[:3] == 'Cos':
-                            cost = int(i[4:].strip('\n'))
-                    ret = Item(name, stat, slot, amount, cost)
-                elif x[4:] == 'MOB':
-                    for i in check:
-                        if i[:3] == 'Nam':
-                            name = i[4:].strip('\n')
-                        elif i[:3] == 'Hea':
-                            health = int(i[4:].strip('\n'))
-                        elif i[:3] == 'Man':
-                            mana = int(i[4:].strip('\n'))
-                        elif i[:3] == 'Dam':
-                            damage = int(i[4:].strip('\n'))
-                        elif i[:3] == 'Def':
-                            defence = int(i[4:].strip('\n'))
-                        elif i[:3] == 'Exp':
-                            experience = int(i[4:].strip('\n'))
-                        elif i[:3] == 'Lot':
-                            loot = i[4:].strip('\n')
-                        elif i[:3] == 'Mag':
-                            magic = i[4:].strip('\n')
-                    ret = Mob(name, health, mana, damage, defence, experience, loot, magic)
+                info[0] = x[4:].strip('\n')
+            elif x[:3] == 'Nam':
+                info[1] = x[4:].strip('\n')
+            elif x[:3] == 'cla':
+                info[2] = x[4:].strip('\n')
+            elif x[:3] == 'Dex':
+                info[3] = int(x[4:].strip('\n'))
+            elif x[:3] == 'Str':
+                info[4] = int(x[4:].strip('\n'))
+            elif x[:3] == 'Int':
+                info[5] = int(x[4:].strip('\n'))
+            elif x[:3] == 'Lvl':
+                info[6] = int(x[4:].strip('\n'))
+            elif x[:3] == 'Exp':
+                info[7] = int(x[4:].strip('\n'))
+            elif x[:3] == 'coe':
+                info[8] = int(x[4:].strip('\n'))
+            elif x[:3] == 'exp':
+                info[9] = int(x[4:].strip('\n'))
+            elif x[:3] == 'Dam':
+                info[10] = int(x[4:].strip('\n'))
+            elif x[:3] == 'Sta':
+                info[11] = x[4:].strip('\n')
+            elif x[:3] == 'Slo':
+                info[12] = x[4:].strip('\n')
+            elif x[:3] == 'Amo':
+                info[13] = int(x[4:].strip('\n'))
+            elif x[:3] == 'Cos':
+                info[14] = int(x[4:].strip('\n'))
+            elif x[:3] == 'Def':
+                info[15] = int(x[4:].strip('\n'))
+        if info[0] == 'PLAYER':
+            ret = Player(info[1], info[3], info[4], info[5], info[2])
+        elif info[0] == 'MAGIC':
+            ret = Magic(info[1], info[10], info[6])
+        elif info[0] == 'ITEM':
+            ret = Item(info[1], info[11], info[12], info[13], info[14])
+        elif info[0] == 'MOB':
+            ret = Mob(info[1], info[15], info[16], info[10], info[17], info[7], ['WIP'], ['WIP'])
         return ret
 
 
@@ -114,7 +92,7 @@ class Player():
 
 class Magic():
 
-    def __init__(self, name, dam, lvl, pic=None, picpath=None):
+    def __init__(self, name='Unknown', dam=0, lvl=0, pic=None, picpath=None):
         self.typ = 'MAGIC'
         self.Nam = name
         self.Dam = dam
@@ -176,3 +154,8 @@ class Battle():
         elif self.Monster.Hp == 0:
             self.Player.Inv.append(random.choice(self.Monster.Loot))
             self.Victory = True
+
+
+class Map():
+    def __init__(self, width, height):
+        pass
