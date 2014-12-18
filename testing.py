@@ -1,10 +1,27 @@
 __author__ = 'dugging'
-import Engine
+from Engine import *
+from tkinter import *
 
-IO = Engine.IOData()
-Dave = Engine.Player('Dave', 2, 3, 4, 'Hunter')
-Dave.Exp = 5
-Dave.Lvl = 0
-Dave.createexpcurve(2, 1)
-IO.save('', 'Player', '.txt', Dave)
-Bob = IO.load('', 'Player', '.txt')
+map1 = Map(4, 4)
+map1.creategrid(map1.width, map1.height)
+for x in range(map1.width):
+    for y in range(map1.height):
+        map1.map[x][0] = 'W'
+        map1.map[x][map1.height-1] = 'W'
+        map1.map[0][y] = 'W'
+        map1.map[map1.width-1][y] = 'W'
+        #map1.map[1][1] = 'F'
+        #map1.map[1][2] = 'F'
+        #map1.map[2][1] = 'F'
+        #map1.map[2][2] = 'F'
+print(map1.map)
+
+
+def window(MAP):
+    GUI = Tk()
+    for x in range(len(MAP.map)):
+        for y in range(len(MAP.map[x])):
+            Label(GUI, text=str(MAP.map[x][y])).grid(column=x, row=y)
+    GUI.mainloop()
+
+window(map1)

@@ -158,4 +158,15 @@ class Battle():
 
 class Map():
     def __init__(self, width, height):
-        pass
+        self.width = int(width)
+        self.height = int(height)
+        self.map = []
+
+    def creategrid(self, width, height):
+        for x in range(width):
+            self.map.append([])
+            for y in range(height):
+                self.map[x].append([])
+
+    def setdata(self, width, height, data):
+        self.map[width][height] = data
