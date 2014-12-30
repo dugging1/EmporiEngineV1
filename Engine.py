@@ -7,8 +7,15 @@ class IOData():
     @staticmethod
     def save(folder, file, extension, data):
         export = open(folder+file+extension, 'w')
-        for i in data.__dict__:
-            export.write(str(i) + ':' + str(data.__dict__[i]) + '\n')
+        if data.typ == 'MAP':
+            export.write('typ:MAP\n')
+            for x in range(data.width):
+                for y in range(data.height):
+                    export.write(data.map[x][y])
+                export.write('\n')
+        else:
+            for i in data.__dict__:
+                export.write(str(i) + ':' + str(data.__dict__[i]) + '\n')
         export.close()
 
     @staticmethod
@@ -59,6 +66,12 @@ class IOData():
             ret = Item(info[1], info[11], info[12], info[13], info[14])
         elif info[0] == 'MOB':
             ret = Mob(info[1], info[15], info[16], info[10], info[17], info[7], ['WIP'], ['WIP'])
+        elif info[0] == 'MAP':
+            ret = Map(len(check[1].strip('\n')), len(check) - 1)
+            ret.creategrid(ret.width, ret.height)
+            for y in range(ret.height):
+                for x in range(ret.width):
+                    ret.map[x][y] = check[y+1][x]
         return ret
 
 
@@ -158,6 +171,7 @@ class Battle():
 
 class Map():
     def __init__(self, width, height):
+        self.typ = 'MAP'
         self.width = int(width)
         self.height = int(height)
         self.map = []
@@ -170,3 +184,9 @@ class Map():
 
     def setdata(self, width, height, data):
         self.map[width][height] = data
+
+    def fillfloor(self):
+        for x in range(self.width):
+            for y in range(self.height):
+                if self.map[x][y] == []:
+                    self.map[x][y] = 'F'
