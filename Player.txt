@@ -1,0 +1,16 @@
+coe:2
+Man:4
+exp:1
+Str:3
+cla:Hunter
+Inv:[]
+Dex:2
+Hea:3
+Int:4
+Lvl:0
+MDe:1
+Def:0
+Exp:5
+Nam:Dave
+Dam:3
+typ:PLAYER

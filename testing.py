@@ -18,7 +18,7 @@ map1.fillfloor()
 IO = IOData()
 IO.save('', 'map1', '.txt', map1)
 map2 = IO.load('', 'map1', '.txt')
-IO.save('', 'map1', '.txt', map2)
+IO.save('', 'map1', '.txt', map2=
 map3 = IO.load('', 'map1', '.txt')
 
 def window(MAP):

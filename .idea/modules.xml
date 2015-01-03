@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../EmporiEditorV1/.idea/EmporiEditorV1.iml" filepath="$PROJECT_DIR$/../EmporiEditorV1/.idea/EmporiEditorV1.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/EmporiEngineV1.iml" filepath="$PROJECT_DIR$/.idea/EmporiEngineV1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../physicsproject/.idea/physicsproject.iml" filepath="$PROJECT_DIR$/../physicsproject/.idea/physicsproject.iml" />
     </modules>
   </component>
 </project>
